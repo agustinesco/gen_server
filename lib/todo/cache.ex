@@ -2,6 +2,7 @@ defmodule Todo.Cache do
   use GenServer
 
   def init(_) do
+    Todo.Database.start("./persist/")
     {:ok, Map.new}
   end
 
@@ -16,7 +17,7 @@ defmodule Todo.Cache do
   def handle_call({:server_process, todo_list_name}, _, todo_servers) do
     case Map.get(todo_servers, todo_list_name) do
       nil ->
-        {:ok, new_server} = Todo.Server.start
+        {:ok, new_server} = Todo.Server.start(todo_list_name)
 
         {
           :reply,
