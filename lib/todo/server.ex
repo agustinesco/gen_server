@@ -18,7 +18,12 @@ defmodule Todo.Server do
   end
 
   def init(name) do
-    {:ok, {name, Todo.List.new()}}
+    send(self(), :real_init)
+    {:ok, {name, nil}}
+  end
+
+  def handle_info(:real_init, {name, _state}) do
+    {:noreply, {name, Todo.Database.get(name) || Todo.List.new()}}
   end
 
   def handle_cast({:put, key, value}, {name, state}) do
