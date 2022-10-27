@@ -1,8 +1,8 @@
 defmodule Todo.Server do
   use GenServer
 
-  def start(name) do
-    GenServer.start(Todo.Server, name)
+  def start_link(name) do
+    GenServer.start_link(Todo.Server, name)
   end
 
   def put(pid, key, value) do
@@ -23,6 +23,7 @@ defmodule Todo.Server do
   end
 
   def handle_info(:real_init, {name, _state}) do
+    IO.puts("Iniciando la lista para #{name}")
     {:noreply, {name, Todo.Database.get(name) || Todo.List.new()}}
   end
 

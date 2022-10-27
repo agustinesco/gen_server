@@ -1,15 +1,16 @@
 defmodule Todo.Database do
   use GenServer
 
-  def start(db_folder) do
-    GenServer.start(Todo.Database, db_folder, name: :database_server)
+  def start_link(db_folder) do
+    GenServer.start_link(Todo.Database, db_folder, name: :database_server)
   end
 
   def init(db_folder) do
     File.mkdir_p(db_folder)
     workers =
       Enum.map(0..2, fn n ->
-        {:ok, worker} = GenServer.start(Todo.DatabaseWorker, db_folder)
+        {:ok, worker} = Todo.DatabaseWorker.start_link(db_folder)
+        IO.puts(["Trabajo Trabajo!", "No soy esa clase de orco", "Mas trabajo?", "Si mi rey?"] |> Enum.random())
         {n, worker}
       end)
       |> Map.new()
@@ -34,11 +35,10 @@ defmodule Todo.Database do
   end
 
   def handle_call({:get, key}, caller, workers) do
-    IO.inspect(workers)
     spawn( fn  ->
       worker =
         get_worker(key, workers)
-        |> IO.inspect(label: :choosen_worker)
+        |> IO.inspect(label: Enum.random(["Dejame dormir!", "No quiero!!", "Pedicelo a nº #{:rand.uniform(3)}", "Más trabajo?"]))
       response =
         GenServer.call(worker, {:get, key})
 
