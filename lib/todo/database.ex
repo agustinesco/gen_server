@@ -2,7 +2,8 @@ defmodule Todo.Database do
   use GenServer
 
   def start_link(db_folder) do
-    GenServer.start_link(Todo.Database, db_folder, name: :database_server)
+    IO.inspect("Iniciando darabeis")
+    GenServer.start_link(Todo.Database, db_folder, name: :database)
   end
 
   def init(db_folder) do
@@ -19,11 +20,11 @@ defmodule Todo.Database do
   end
 
   def store(key, data) do
-    GenServer.cast(:database_server, {:store, key, data})
+    GenServer.cast(:database, {:store, key, data})
   end
 
   def get(key) do
-    GenServer.call(:database_server, {:get, key})
+    GenServer.call(:database, {:get, key})
   end
 
   def handle_cast({:store, key, data}, workers) do

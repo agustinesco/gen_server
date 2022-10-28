@@ -3,7 +3,6 @@ defmodule Todo.Cache do
 
   def init(_) do
     IO.inspect("PERMISO QUE VOY ARDIENDO")
-    Todo.Database.start_link("./persist/")
     {:ok, Map.new}
   end
 
