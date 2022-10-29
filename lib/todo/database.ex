@@ -1,10 +1,6 @@
 defmodule Todo.Database do
   @pool_size 3
 
-  def start_link(db_folder) do
-    Todo.PoolSupervisor.start_link(db_folder, @pool_size)
-  end
-
   def store(key, data) do
     get_worker(key)
     |> Todo.DatabaseWorker.store(key, data)

@@ -9,22 +9,12 @@ defmodule Todo.Supervisor do
   children = [
     %{
       id: Todo.ProcessRegistry,
-      start: {Todo.ProcessRegistry, :start_link, [[]]},
+      start: {Todo.ProcessRegistry, :start_link, [nil]},
       type: :worker
     },
     %{
-      id: Todo.Database,
-      start: {Todo.Database, :start_link, ["./persist/"]},
-      type: :supervisor
-    },
-    %{
-      id: Todo.Cache,
-      start: {Todo.Cache, :start_link, [[]]},
-      type: :worker
-    },
-    %{
-      id: Todo.ServerSupervisor,
-      start: {Todo.ServerSupervisor, :start_link, [[]]},
+      id: Todo.SystemSupervisor,
+      start: {Todo.SystemSupervisor, :start_link, []},
       type: :supervisor
     }
   ]
