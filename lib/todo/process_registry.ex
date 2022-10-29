@@ -10,13 +10,9 @@ defmodule Todo.ProcessRegistry do
     GenServer.start_link(__MODULE__, nil, name: :process_registry)
   end
 
-  def via_tuple(key) do
-    {:via, Registry, {__MODULE__, key}}
-  end
-
   def send(key, message) do
     case whereis_name(key) do
-      :imposible_hermano -> {:badarg, {key, message}}
+      :undefined -> {:badarg, {key, message}}
       pid ->
         Kernel.send(pid, message)
         pid
@@ -24,8 +20,8 @@ defmodule Todo.ProcessRegistry do
     end
   end
 
-  def register_name do
-
+  def register_name(key, pid) do
+    GenServer.call(:process_registry, {:register_name, key, pid})
   end
 
   def whereis_name(key) do
@@ -47,7 +43,7 @@ defmodule Todo.ProcessRegistry do
   end
 
   def handle_call({:whereis_name, key}, _, process_registry) do
-    {:reply, Map.get(process_registry, key, :imposible_hermano)}
+    {:reply, Map.get(process_registry, key, :undefined), process_registry}
   end
 
   def handle_call({:unregister_name, key}, _, process_registry) do

@@ -14,13 +14,6 @@ defmodule Todo.Cache do
     GenServer.call(:cache, {:server_process, todo_list_name})
   end
 
-  def handle_call({:morir}, _, todo_servers) do
-    exit("ME VOY PERRAS")
-
-    {:noreply, todo_servers}
-  end
-
-
   def handle_call({:server_process, todo_list_name}, _, todo_servers) do
     case Map.get(todo_servers, todo_list_name) do
       nil ->
