@@ -2,7 +2,8 @@ defmodule Todo.Server do
   use GenServer
 
   def start_link(name) do
-    GenServer.start_link(Todo.Server, name)
+    IO.inspect("starting server for #{name}'s list")
+    GenServer.start_link(Todo.Server, name, name: Todo.ProcessRegistry.via_tuple(:server, name))
   end
 
   def put(pid, key, value) do
@@ -23,7 +24,6 @@ defmodule Todo.Server do
   end
 
   def handle_info(:real_init, {name, _state}) do
-    IO.puts("Iniciando la lista para #{name}")
     {:noreply, {name, Todo.Database.get(name) || Todo.List.new()}}
   end
 
@@ -42,5 +42,9 @@ defmodule Todo.Server do
   def handle_call({:get, key}, _,  {_name, todo_list} = state) do
     result = Todo.List.entries(todo_list, key)
     {:reply, result, state}
+  end
+
+  def whereis(name) do
+    Todo.ProcessRegistry.whereis_name({:server, name})
   end
 end

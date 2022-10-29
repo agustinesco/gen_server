@@ -64,4 +64,8 @@ defmodule Todo.ProcessRegistry do
         end
     end)
   end
+
+  def via_tuple(type, name) do
+    {:via, __MODULE__ , {type, name}}
+  end
 end
