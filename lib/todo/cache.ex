@@ -35,9 +35,4 @@ defmodule Todo.Cache do
         {:reply, todo_server, todo_servers}
     end
   end
-
-  def handle_call({:saludar}, _, todo_servers) do
-
-    {:reply, "hola!", todo_servers}
-  end
 end
