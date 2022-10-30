@@ -8,6 +8,11 @@ defmodule Todo.Supervisor do
   def init(_) do
   children = [
     %{
+      id: Todo.EtsTable,
+      start: {Todo.EtsTable, :start_link, [nil]},
+      type: :worker
+    },
+    %{
       id: Todo.ProcessRegistry,
       start: {Todo.ProcessRegistry, :start_link, [nil]},
       type: :worker
@@ -19,6 +24,6 @@ defmodule Todo.Supervisor do
     }
   ]
 
-  Supervisor.init(children, strategy: :one_for_one)
+  Supervisor.init(children, strategy: :rest_for_one)
   end
 end
