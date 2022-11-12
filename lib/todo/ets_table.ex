@@ -6,6 +6,7 @@ defmodule Todo.EtsTable do
   end
 
   def init(_) do
+    IO.inspect("Creando ets table")
     :ets.new(:registries, [:set, :protected, :named_table])
 
     {:ok, nil}

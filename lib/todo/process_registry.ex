@@ -3,6 +3,7 @@ defmodule Todo.ProcessRegistry do
   import Kernel, except: [send: 2]
 
   def init(_) do
+    IO.inspect("creando registro de procesos")
     {:ok, nil}
   end
 

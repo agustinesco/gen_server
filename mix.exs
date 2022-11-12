@@ -1,9 +1,10 @@
 defmodule GenServers.MixProject do
+  alias Todo.Application
   use Mix.Project
 
   def project do
     [
-      app: :gen_servers,
+      app: :todo_app,
       version: "0.1.0",
       elixir: "~> 1.13",
       start_permanent: Mix.env() == :prod,
@@ -14,7 +15,8 @@ defmodule GenServers.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger]
+      extra_applications: [:logger],
+      mod: {Application, []}
     ]
   end
 
