@@ -15,7 +15,7 @@ defmodule GenServers.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger],
+      extra_applications: [:logger, :gproc],
       mod: {Application, []}
     ]
   end
@@ -23,6 +23,8 @@ defmodule GenServers.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:meck, "~> 0.8.2", only: :test},
+      {:gproc, "~> 0.5.0"}
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
     ]
