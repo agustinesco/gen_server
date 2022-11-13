@@ -16,7 +16,10 @@ defmodule GenServers.MixProject do
   def application do
     [
       extra_applications: [:logger, :gproc],
-      mod: {Application, []}
+      mod: {Application, []},
+      env: [
+        port: 5454
+      ]
     ]
   end
 
@@ -27,7 +30,8 @@ defmodule GenServers.MixProject do
       {:gproc, "~> 0.9.0"},
       {:cowboy, "2.9.0"},
       {:plug, "1.14.0"},
-      {:httpoison, "0.4.3", only: :test}
+      {:httpoison, "0.4.3", only: :test},
+      {:plug_cowboy, "~> 2.6"}
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
     ]
