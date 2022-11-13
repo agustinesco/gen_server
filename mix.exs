@@ -24,7 +24,10 @@ defmodule GenServers.MixProject do
   defp deps do
     [
       {:meck, "~> 0.8.2", only: :test},
-      {:gproc, "~> 0.5.0"}
+      {:gproc, "~> 0.9.0"},
+      {:cowboy, "2.9.0"},
+      {:plug, "1.14.0"},
+      {:httpoison, "0.4.3", only: :test}
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
     ]
